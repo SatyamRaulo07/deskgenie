@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: theme('colors.dark-bg');
+  color: white;
+  overflow: hidden;
+}
+
+.glass-card {
+  @apply bg-glass backdrop-blur-glass rounded-xl border border-white/10;
+}
+
+.mic-button {
+  @apply w-24 h-24 rounded-full bg-neon-blue/20 border-2 border-neon-blue 
+         flex items-center justify-center cursor-pointer transition-all duration-300
+         hover:bg-neon-blue/30 active:scale-95;
+}
+
+.mic-button.active {
+  @apply animate-glow;
+} 

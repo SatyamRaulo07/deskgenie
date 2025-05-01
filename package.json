@@ -1,0 +1,92 @@
+{
+  "name": "deskgenie",
+  "version": "1.0.0",
+  "description": "Your Personal Voice Assistant",
+  "main": "main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run start\" \"cd renderer && npm start\"",
+    "build": "cd renderer && npm run build",
+    "postinstall": "cd renderer && npm install && node scripts/download-model.js && node scripts/generate-icons.js",
+    "download-model": "node scripts/download-model.js",
+    "generate-icons": "node scripts/generate-icons.js",
+    "pack": "electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "publish": "electron-builder -p always",
+    "build:prod": "npm run build && electron-builder --publish always",
+    "build:prod:win": "npm run build && electron-builder --win --publish always",
+    "build:prod:mac": "npm run build && electron-builder --mac --publish always",
+    "build:prod:linux": "npm run build && electron-builder --linux --publish always"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "sharp": "^0.33.2"
+  },
+  "dependencies": {
+    "vosk": "^0.3.45",
+    "node-fetch": "^2.7.0",
+    "extract-zip": "^2.0.1",
+    "compromise": "^14.11.3",
+    "shelljs": "^0.8.5",
+    "say": "^0.16.0",
+    "@google/generative-ai": "^0.2.0",
+    "dotenv": "^16.4.1",
+    "electron-store": "^8.1.0",
+    "crypto-js": "^4.2.0",
+    "uuid": "^9.0.1",
+    "electron-updater": "^6.1.7",
+    "electron-log": "^5.1.1"
+  },
+  "build": {
+    "appId": "com.deskgenie.app",
+    "productName": "DeskGenie",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main/**/*",
+      "renderer/build/**/*",
+      "models/**/*",
+      "package.json"
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "SatyamRaulo07",
+      "repo": "deskgenie",
+      "private": false,
+      "releaseType": "release"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "renderer/public/icon.ico"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "renderer/public/icon.icns"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "renderer/public/icon.png",
+      "category": "Utility"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DeskGenie"
+    }
+  }
+} 
