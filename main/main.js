@@ -7,6 +7,8 @@ const voiceService = require('./services/voiceService');
 const licenseService = require('./services/licenseService');
 const updateService = require('./services/updateService');
 const { createMenu } = require('./menu');
+const emailService = require('./services/emailService');
+const setupPerformanceHandlers = require('./ipc/performance');
 
 let mainWindow;
 let recognizer;
@@ -26,14 +28,18 @@ try {
   console.error('Vosk initialization failed:', error);
 }
 
+// Initialize performance monitoring
+setupPerformanceHandlers();
+
 function createWindow() {
   try {
     mainWindow = new BrowserWindow({
       width: 900,
       height: 600,
       webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false
+        nodeIntegration: false,
+        contextIsolation: true,
+        preload: path.join(__dirname, 'preload.js')
       },
       frame: false,
       transparent: true,
@@ -226,6 +232,79 @@ ipcMain.handle('process-intent', async (event, text) => {
   }
 });
 
+// Email Service IPC Handlers
+ipcMain.handle('check-email-auth', async () => {
+    try {
+        return await emailService.checkAuthStatus();
+    } catch (error) {
+        console.error('Error checking email auth status:', error);
+        throw error;
+    }
+});
+
+ipcMain.handle('get-gmail-auth-url', async () => {
+    try {
+        return await emailService.getGmailAuthUrl();
+    } catch (error) {
+        console.error('Error getting Gmail auth URL:', error);
+        throw error;
+    }
+});
+
+ipcMain.handle('get-outlook-auth-url', async () => {
+    try {
+        return await emailService.getOutlookAuthUrl();
+    } catch (error) {
+        console.error('Error getting Outlook auth URL:', error);
+        throw error;
+    }
+});
+
+ipcMain.handle('handle-gmail-callback', async (event, code) => {
+    try {
+        return await emailService.handleGmailCallback(code);
+    } catch (error) {
+        console.error('Error handling Gmail callback:', error);
+        throw error;
+    }
+});
+
+ipcMain.handle('handle-outlook-callback', async (event, code) => {
+    try {
+        return await emailService.handleOutlookCallback(code);
+    } catch (error) {
+        console.error('Error handling Outlook callback:', error);
+        throw error;
+    }
+});
+
+ipcMain.handle('send-gmail', async (event, { to, subject, body }) => {
+    try {
+        return await emailService.sendGmailEmail(to, subject, body);
+    } catch (error) {
+        console.error('Error sending Gmail:', error);
+        throw error;
+    }
+});
+
+ipcMain.handle('send-outlook', async (event, { to, subject, body }) => {
+    try {
+        return await emailService.sendOutlookEmail(to, subject, body);
+    } catch (error) {
+        console.error('Error sending Outlook email:', error);
+        throw error;
+    }
+});
+
+ipcMain.handle('email-logout', async () => {
+    try {
+        return await emailService.logout();
+    } catch (error) {
+        console.error('Error during email logout:', error);
+        throw error;
+    }
+});
+
 // Check license and updates before starting the app
 app.whenReady().then(async () => {
   try {
@@ -253,8 +332,10 @@ app.whenReady().then(async () => {
   }
 });
 
+// Handle app quit
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    ipcMain.emit('app-quit');
     app.quit();
   }
 });

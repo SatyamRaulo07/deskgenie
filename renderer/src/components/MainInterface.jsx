@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useVoiceRecognition } from '../hooks/useVoiceRecognition';
+import PerformanceMonitor from './PerformanceMonitor';
 
 function MainInterface({ licenseInfo }) {
   const {
@@ -15,6 +16,7 @@ function MainInterface({ licenseInfo }) {
   } = useVoiceRecognition();
 
   const [chatHistory, setChatHistory] = useState([]);
+  const [showPerformanceMonitor, setShowPerformanceMonitor] = useState(false);
 
   const getStatusText = () => {
     if (isSpeaking) {
@@ -42,15 +44,23 @@ function MainInterface({ licenseInfo }) {
           <h1 className="text-4xl font-bold text-center text-blue-400">
             DeskGenie
           </h1>
-          {licenseInfo && (
-            <div className="text-sm text-gray-400">
-              {licenseInfo.isTrial ? (
-                <span>Trial License - {new Date(licenseInfo.expiresAt).toLocaleDateString()}</span>
-              ) : (
-                <span>Full License</span>
-              )}
-            </div>
-          )}
+          <div className="flex items-center space-x-4">
+            {licenseInfo && (
+              <div className="text-sm text-gray-400">
+                {licenseInfo.isTrial ? (
+                  <span>Trial License - {new Date(licenseInfo.expiresAt).toLocaleDateString()}</span>
+                ) : (
+                  <span>Full License</span>
+                )}
+              </div>
+            )}
+            <button
+              onClick={() => setShowPerformanceMonitor(!showPerformanceMonitor)}
+              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
+            >
+              {showPerformanceMonitor ? 'Hide Metrics' : 'Show Metrics'}
+            </button>
+          </div>
         </div>
         
         <div className="bg-gray-800 rounded-lg p-6 shadow-lg">
@@ -136,6 +146,8 @@ function MainInterface({ licenseInfo }) {
           <p>Try saying: "open chrome", "play music", or ask me anything!</p>
         </div>
       </div>
+
+      <PerformanceMonitor visible={showPerformanceMonitor} />
     </div>
   );
 }

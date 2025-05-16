@@ -1,41 +1,53 @@
 # DeskGenie - Your Personal Voice Assistant
 
-DeskGenie is an intelligent voice assistant built with Electron and React that helps you manage your desktop tasks through natural voice commands.
+DeskGenie is an intelligent voice assistant built with Electron and React that helps you manage your desktop tasks through natural voice commands. It combines the power of Vosk for voice recognition and Google's Gemini AI for natural language processing to provide a seamless voice-controlled desktop experience.
 
-## Features
+## 🌟 Features
 
-- 🎤 Voice recognition using Vosk
-- 🤖 Natural language processing with Google's Generative AI
-- 🔄 Automatic updates via GitHub Releases
-- 🔒 License management system
-- 🎯 Cross-platform support (Windows, macOS, Linux)
-- 🎨 Modern and intuitive user interface
+- 🎤 **Voice Recognition**: Powered by Vosk for accurate speech-to-text conversion
+- 🤖 **AI-Powered Understanding**: Uses Google's Gemini AI for natural language processing
+- 🔄 **Automatic Updates**: Seamless updates via GitHub Releases
+- 🔒 **License Management**: Trial and full license options
+- 🎯 **Cross-Platform**: Works on Windows, macOS, and Linux
+- 🎨 **Modern UI**: Beautiful, responsive interface built with React and Tailwind CSS
+- 📧 **Email Integration**: Send emails using Gmail or Outlook
+- 🎙️ **Voice Feedback**: Customizable voice responses
+- 🔍 **Web Search**: Quick web searches through voice commands
+- ⚡ **System Control**: Control your computer with voice commands
 
-## Prerequisites
+## 📋 Prerequisites
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+- Node.js (v16 or higher)
+- npm (v7 or higher)
 - Git
+- Google Cloud API Key (for Gemini AI)
+- Vosk Model (automatically downloaded during installation)
 
-## Installation
+## 🚀 Installation
 
-1. Clone the repository:
+1. **Clone the repository**:
 ```bash
 git clone https://github.com/yourusername/deskgenie.git
 cd deskgenie
 ```
 
-2. Install dependencies:
+2. **Install dependencies**:
 ```bash
 npm install
 ```
 
-3. Start the development server:
+3. **Configure environment variables**:
+Create a `.env` file in the root directory:
+```env
+GEMINI_API_KEY=your_google_api_key
+```
+
+4. **Start development server**:
 ```bash
 npm run dev
 ```
 
-## Building the Application
+## 🏗️ Building the Application
 
 ### Development Build
 ```bash
@@ -60,29 +72,56 @@ npm run build:prod:mac
 npm run build:prod:linux
 ```
 
-## Configuration
+## 🧪 Testing
 
-1. Update the GitHub repository information in `package.json`:
-```json
-"publish": {
-  "provider": "github",
-  "owner": "yourusername",
-  "repo": "deskgenie",
-  "private": false,
-  "releaseType": "release"
-}
+Run the test suite:
+```bash
+# Unit tests
+npm test
+
+# Watch mode
+npm run test:watch
+
+# E2E tests
+npm run test:e2e
 ```
 
-2. Create a `.env` file in the root directory with your API keys:
-```
-GOOGLE_API_KEY=your_google_api_key
-```
+## 📝 Available Voice Commands
 
-## License
+- **Application Control**:
+  - "Open Chrome"
+  - "Launch Notepad"
+  - "Start Music Player"
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+- **System Commands**:
+  - "What time is it?"
+  - "Shutdown computer"
+  - "Restart computer"
 
-## Contributing
+- **Web Search**:
+  - "Search for [query]"
+  - "Look up [query]"
+  - "Find [query]"
+
+- **Email**:
+  - "Send email to [recipient]"
+  - "Compose new email"
+  - "Check my inbox"
+
+## 🔧 Configuration
+
+### Voice Settings
+You can customize voice feedback settings:
+- Verbosity level (full, minimal, mute)
+- Voice speed
+- Voice pitch
+- Voice selection
+
+### License Management
+- Trial License: 14-day free trial
+- Full License: Unlimited access to all features
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
@@ -90,6 +129,27 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## Support
+### Development Guidelines
+- Follow the ESLint configuration
+- Write tests for new features
+- Update documentation
+- Follow the existing code style
 
-If you encounter any issues or have questions, please open an issue in the GitHub repository. 
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🆘 Support
+
+- **Documentation**: [Full Documentation](https://deskgenie.app/docs)
+- **Issues**: [GitHub Issues](https://github.com/yourusername/deskgenie/issues)
+- **Email**: support@deskgenie.app
+- **Discord**: [Join our community](https://discord.gg/deskgenie)
+
+## 🙏 Acknowledgments
+
+- [Vosk](https://github.com/alphacep/vosk-api) for voice recognition
+- [Google Gemini AI](https://ai.google.dev/) for natural language processing
+- [Electron](https://www.electronjs.org/) for the desktop framework
+- [React](https://reactjs.org/) for the UI framework
+- [Tailwind CSS](https://tailwindcss.com/) for styling 
